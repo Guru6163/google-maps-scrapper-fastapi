@@ -6,7 +6,7 @@ BASE_GOOGLE_SEARCH_URL = "https://www.google.com"
 GOOGLE_SEARCH_TEXT = "site:lever.co OR site:greenhouse.io associate frontend developer"
 
 
-async def scrape_jobs():
+async def scrape_jobs(filter_by = 'past2'):
     links = []
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -31,10 +31,9 @@ async def scrape_jobs():
             await page.click('div[class="KTBKoe"]')
 
             # Selecting "Past Week"
-            try:
+            if filter_by == 'past24':
                 await page.click('a[href*="qdr:d"]')
-            except playwright._impl._errors.TimeoutError:
-                print("Past 24 hours option not found, selecting Past Week instead")
+            else:
                 await page.click('a[href*="qdr:w"]')
 
             await page.wait_for_timeout(4000)
