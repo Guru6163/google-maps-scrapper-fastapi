@@ -27,14 +27,40 @@ RUN apt-get update && apt-get install -y \
     libpango-1.0-0 \
     libcairo2 \
     libasound2 \
-    libx11-xcb1 \
-    libxcursor1 \
     libgtk-3-0 \
-    libgdk-pixbuf-2.0-0 \
+    libgdk-pixbuf2.0-0 \
     libpangocairo-1.0-0 \
     libcairo-gobject2 \
-    libgdk-pixbuf2.0-dev \
+    libgdk3.0-cil-dev \
+    libsoup-3.0-0 \
+    libgstreamer1.0-0 \
+    libatomic1 \
+    libxslt1.1 \
+    libwoff1 \
+    libvpx7 \
+    libevent-2.1-7 \
+    libopus0 \
+    libgstallocators-1.0-0 \
+    libgstapp-1.0-0 \
+    libgstbase-1.0-0 \
+    libgstpbutils-1.0-0 \
+    libgstaudio-1.0-0 \
+    libgsttag-1.0-0 \
+    libgstvideo-1.0-0 \
+    libgstgl-1.0-0 \
+    libgstcodecparsers-1.0-0 \
+    libgstfft-1.0-0 \
+    libharfbuzz-icu0 \
+    libenchant-2-2 \
+    libsecret-1-0 \
+    libhyphen0 \
+    libmanette-0.2-0 \
+    libflite1 \
+    libflite1-dev \
+    libgles2-mesa \
+    libx264-155 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 # Install Playwright and other Python dependencies
 COPY requirements.txt .
