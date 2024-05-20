@@ -29,7 +29,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/fastapi-app:$GITHUB_SHA .
+        docker buildx build --platform linux/amd64,linux/arm64 -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/fastapi-app:$GITHUB_SHA .
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/fastapi-app:$GITHUB_SHA
 
     - name: Deploy to Cloud Run
