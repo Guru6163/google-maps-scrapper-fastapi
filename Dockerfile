@@ -1,6 +1,10 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
+# Set environment variables to reduce the size of the Docker image
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 # Set the working directory
 WORKDIR /app
 
@@ -31,7 +35,7 @@ RUN apt-get update && apt-get install -y \
     libgdk-pixbuf2.0-0 \
     libpangocairo-1.0-0 \
     libcairo-gobject2 \
-    libgdk3.0-cil-dev \
+    gstreamer1.0-tools \
     libsoup-3.0-0 \
     libgstreamer1.0-0 \
     libatomic1 \
@@ -40,40 +44,25 @@ RUN apt-get update && apt-get install -y \
     libvpx7 \
     libevent-2.1-7 \
     libopus0 \
-    libgstallocators-1.0-0 \
-    libgstapp-1.0-0 \
-    libgstbase-1.0-0 \
-    libgstpbutils-1.0-0 \
-    libgstaudio-1.0-0 \
-    libgsttag-1.0-0 \
-    libgstvideo-1.0-0 \
-    libgstgl-1.0-0 \
-    libgstcodecparsers-1.0-0 \
-    libgstfft-1.0-0 \
+    libgstreamer-plugins-base1.0-0 \
     libharfbuzz-icu0 \
     libenchant-2-2 \
     libsecret-1-0 \
     libhyphen0 \
     libmanette-0.2-0 \
     libflite1 \
-    libflite1-dev \
+    libflite-dev \
     libgles2-mesa \
-    libx264-155 \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    libx264-160 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-
-# Install Playwright and other Python dependencies
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers
-RUN playwright install
-
-# Copy the content of the local src directory to the working directory
+# Copy the application code
 COPY . .
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
 # Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
